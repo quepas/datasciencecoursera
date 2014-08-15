@@ -9,9 +9,7 @@ corr <- function(directory, threshold = 0) {
     complete <- complete.cases(file)
     if (sum(complete) > threshold) {
       data <- file[complete,]
-      sulfate <- data[, 2]
-      nitrate <- data[, 3]
-      result <- c(result, cor(sulfate, nitrate))
+      result <- c(result, cor(data$sulfate, data$nitrate))
     }
   }
   result

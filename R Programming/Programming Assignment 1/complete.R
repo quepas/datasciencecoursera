@@ -6,10 +6,10 @@ complete <- function(directory, id = 1:332) {
   for (name in file_names) {
     path <- paste(directory, name, sep="\\")
     file <- read.csv(path)
-    file_id <- file[1,4]
+    file_id <- file$ID[1]
 
     if (file_id %in% id) {
-      result[result[, 1] == file_id, 2] <- sum(complete.cases(file))
+      result[(result$id == file_id), 2] <- sum(complete.cases(file))
     }
   }
   result
