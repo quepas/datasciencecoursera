@@ -23,8 +23,7 @@ rankall <- function(outcome, num = "best") {
     data_from_state <- subset(data, data$State==state)
     data_from_state[, morality_idx] <- as.numeric(data_from_state[,morality_idx])
     data_order <- order(data_from_state[,morality_idx], data_from_state$Hospital.Name)
-    ordered_data_from_state <- data_from_state[data_order,];
-    hospital_names <- ordered_data_from_state$Hospital.Name
+    hospital_names <- data_from_state[data_order,]$Hospital.Name
     num_hospital <- length(hospital_names)
     
     if (num == "best") {

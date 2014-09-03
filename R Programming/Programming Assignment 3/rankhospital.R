@@ -17,10 +17,11 @@ rankhospital <- function(state, outcome, num = "best") {
   ## Return hospital name in that state with the given rank 30-day death rate
   data_from_state <- subset(data, data$State==state)
   morality_idx <- unique_outcomes_idx[outcome]
-  data_from_state <- data_from_state[data_from_state[,morality_idx]!="Not Available",]
   data_from_state[, morality_idx] <- as.numeric(data_from_state[,morality_idx])
-  ordered_data_from_state <- data_from_state[order(data_from_state[,morality_idx], data_from_state[,2]),];
-  hospital_names <- ordered_data_from_state[,2]
+  ## Remove hospitals with NA data
+  data_from_state <- data_from_state[!is.na(data_from_state[,morality_idx]),]
+  data_order <- order(data_from_state[,morality_idx], data_from_state$Hospital.Name)
+  hospital_names <- data_from_state[data_order,]$Hospital.Name
   num_hospital <- length(hospital_names)
   
   if (num == "best") {
