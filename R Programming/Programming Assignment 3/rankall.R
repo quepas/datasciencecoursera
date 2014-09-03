@@ -22,8 +22,8 @@ rankall <- function(outcome, num = "best") {
   for (state in unique_states) {
     data_from_state <- subset(data, data$State==state)
     data_from_state[, morality_idx] <- as.numeric(data_from_state[,morality_idx])
-    ## Remove hospitals with NA data
-    ordered_data_from_state <- data_from_state[order(data_from_state[,morality_idx], data_from_state$Hospital.Name),];
+    data_order <- order(data_from_state[,morality_idx], data_from_state$Hospital.Name)
+    ordered_data_from_state <- data_from_state[data_order,];
     hospital_names <- ordered_data_from_state$Hospital.Name
     num_hospital <- length(hospital_names)
     
