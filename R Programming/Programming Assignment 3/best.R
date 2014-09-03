@@ -13,7 +13,10 @@ best <- function(state, outcome) {
   ## Return hospital name in that state with lowest 30-day death rate
   data_from_state <- subset(data, data$State==state)
   morality_idx <- unique_outcomes_idx[outcome]
-  morality_min <- min(data_from_state[,morality_idx])
-  hospital_names <- data_from_state[data_from_state[,morality_idx]==morality_min,2]
-  sort(hospital_names)[1]
+  data_from_state[, morality_idx] <- as.numeric(data_from_state[,morality_idx])
+  ## Remove hospitals with NA data
+  data_from_state <- data_from_state[!is.na(data_from_state[,morality_idx]),]
+  ## Order data by hospital names
+  data_from_state <- data_from_state[order(data_from_state$Hospital.Name),]
+  data_from_state[which.min(data_from_state[,morality_idx]), 2]
 }
